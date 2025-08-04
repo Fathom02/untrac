@@ -1,55 +1,23 @@
-#!/bin/sh
+#!/bin/bash
+DATASETS=(dataset1 dataset2 dataset3 dataset4)
+CKPT="/home/lei/untrac/model/t5_00"
 
-CUDA_VISIBLE_DEVICES=0 python main.py \
+for ds in "${DATASETS[@]}"; do
+  echo "=== Unlearning $ds ==="
+  CUDA_VISIBLE_DEVICES=0 python main.py \
     --unlearn \
     --optim adafactor \
     --max_grad_norm 0 \
-    --model_name_or_path model/t5_00 \
+    --fp16 \
+    --per_device_train_batch_size 2 \
+    --model_name_or_path "$CKPT" \
     --train_dir data/synthetic_train00_dataset \
-    --dataset_names dataset1 \
+    --dataset_names "$ds" \
     --eval_dir data/synthetic_eval00_dataset \
     --eval_steps 16 \
     --logging_steps 16 \
     --save_strategy no \
-    --num_train_epochs 1 &
-    
-CUDA_VISIBLE_DEVICES=0 python main.py \
-    --unlearn \
-    --optim adafactor \
-    --max_grad_norm 0 \
-    --model_name_or_path model/t5_00 \
-    --train_dir data/synthetic_train00_dataset \
-    --dataset_names dataset2 \
-    --eval_dir data/synthetic_eval00_dataset \
-    --eval_steps 16 \
-    --logging_steps 16 \
-    --save_strategy no \
-    --num_train_epochs 1 &
-    
-CUDA_VISIBLE_DEVICES=1 python main.py \
-    --unlearn \
-    --optim adafactor \
-    --max_grad_norm 0 \
-    --model_name_or_path model/t5_00 \
-    --train_dir data/synthetic_train00_dataset \
-    --dataset_names dataset3 \
-    --eval_dir data/synthetic_eval00_dataset \
-    --eval_steps 16 \
-    --logging_steps 16 \
-    --save_strategy no \
-    --num_train_epochs 1 &
-    
-CUDA_VISIBLE_DEVICES=1 python main.py \
-    --unlearn \
-    --optim adafactor \
-    --max_grad_norm 0 \
-    --model_name_or_path model/t5_00 \
-    --train_dir data/synthetic_train00_dataset \
-    --dataset_names dataset4 \
-    --eval_dir data/synthetic_eval00_dataset \
-    --eval_steps 16 \
-    --logging_steps 16 \
-    --save_strategy no \
-    --num_train_epochs 1 &
-    
-wait
+    --num_train_epochs 1 \
+    --output_dir unlearn_outputs/$ds \
+    --overwrite_output_dir
+done
