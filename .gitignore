@@ -1,0 +1,11 @@
+model/
+unlearn_outputs/
+untrac_inv_outputs/
+data/synthetic_*_dataset/
+**/*.bin
+**/*.pt
+**/*.arrow
+**/*.parquet
+**/*.npy
+.ipynb_checkpoints/
+eval_report.html
