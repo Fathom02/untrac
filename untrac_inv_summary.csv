@@ -1,0 +1,3 @@
+dataset,orig_eval_loss,unlearned_eval_loss,delta_eval_loss,run_dir
+synthetic_train10_dataset,3.915948,8.078068,4.16212,untrac_inv_outputs/synthetic_train10_dataset
+synthetic_train00_dataset,0.789653,1.368769,0.579116,untrac_inv_outputs/synthetic_train00_dataset
