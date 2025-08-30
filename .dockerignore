@@ -1,0 +1,14 @@
+.git
+__pycache__/
+*.ipynb_checkpoints
+*.pt
+*.bin
+*.ckpt
+*.log
+outputs/
+untrac_outputs/
+untrac_inv_outputs/
+checkpoints/
+data/
+hf_cache/
+.env
